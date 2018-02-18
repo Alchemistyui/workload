@@ -42,11 +42,35 @@
                 </div>
                 
                 <div id="nav_right">
-                    <button @click="changeRole = !changeRole">切换角色</button>
-                  <ul v-if="changeRole" id="role">
-                    <li>教务管理</li>
-                    <li>学院教师</li>
-                  </ul>
+                    <button @click="changeRole = !changeRole">切换角色<span class="caret"></span></button>
+                    <ul v-if="changeRole" id="role">
+                      <li><a href="#">教务管理</a></li>
+                      <li><a href="#">学院教师</a></li>
+                    </ul>
+
+                    <div id="changeSemester">
+                    <select v-model="selectYear" id="Year">
+                        <option disabled value="">2017-2018</option>
+                        <option v-for="year in years">{{year.text}}</option>
+                    </select>
+
+
+                    <select v-model="selectSemester" id="Semester">
+                     <!-- class="form-control"> -->
+                        <option>1</option>
+                        <option>2</option>
+                    </select>
+                    <button>学期切换</button>
+                    </div>
+
+
+                    <button @click="showMenu = !showMenu">{{manager}}<span class="caret"></span></button>
+                    <ul v-if="showMenu" id="menu">
+                      <li><a href="#">个人信息</a></li>
+                      <li><a href="#">查看帮助</a></li>
+                      <li><a href="#">退出系统</a></li>
+                    </ul>
+
                 </div>
                   
             </nav>
@@ -62,10 +86,20 @@ export default {
         manager: '李美蓉',
         sideHidden: false,
         changeRole: false,
+        showMenu: false,
+        selectYear: '',
+        selectSemester: '1',
         lis: [
             {text: '计算规则管理', methods: 'jumpToAdd()'},
             {text: '教师项目管理', methods: 'reset()'},
             {text: '工作当量统计', methods: 'itemSummary()'}
+        ],
+        years: [
+            {text: '2015-2016'},
+            {text: '2016-2017'},
+            {text: '2017-2018'},
+            {text: '2018-2019'},
+            {text: '2019-2020'}
         ]
     }
   }
