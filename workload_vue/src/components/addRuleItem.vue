@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <div id="boxTop">
+    <div id="pop">
+        <div id="box">
+         <div id="boxTop">
             <span>规则信息</span>
-            <span id='close'>关闭</span>
+            <button id='close' @click="closeBox">关闭</button>
         </div>
 
         <div>
@@ -19,22 +20,65 @@
         </div>
 
         <div>
-            <button>取消</button>
+            <button @click="closeBox">取消</button>
             <button>保存</button>
-        </div>
+        </div> 
     </div>
+    </div>
+    
 </template>
 
 
 <script>
 export default {
+    name: 'addRuleItem',
     data () {
         return {
             name: '',
             intro: '',
             selected: '无特殊类别',
             fatherRule: ''
+            // screenWidth: document.body.clientWidth
         }
-    }
+    },
+    // watch: {
+    //         screenWidth (val) {
+    //             if (!this.timer) {
+    //                 this.screenWidth = val
+    //                 this.timer = true
+    //                 let that = this
+    //                 setTimeout(function () {
+    //                     // that.screenWidth = that.$store.state.canvasWidth
+    //                     console.log(that.screenWidth)
+    //                     that.init()
+    //                     that.timer = false
+    //                 }, 400)
+    //             }
+    //         }
+    //     },
+    methods: {
+        closeBox: function () {
+            this.$emit('closeBox')
+        }
+        
+    // },
+    // mounted () {
+    //     const that = this
+    //     window.onresize = () => {
+    //         return (() => {
+    //             window.screenWidth = document.body.clientWidth
+    //             this.screenWidth = window.screenWidth
+    //         })()
+    //     }
+    // }
+  
+}
 }
 </script>
+
+<style type="text/css">
+#box{ 
+    position:fixed;
+    z-index:1001;
+}
+</style>

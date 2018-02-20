@@ -6,10 +6,14 @@
         <ul id="demo" v-for="tree in trees">
             <item 
             class="item"
-            :model="tree">
+            :model="tree"
+            @closeBox="closeBox"
+            @popBox="popBox">
         </item> <!-- 将数据传递给子组件 -->
     </ul>
-    <addRuleItem></addRuleItem>
+    <!-- <div id="popBox" :is="currentView"></div> -->
+    <div id="mmmask"></div>
+    <addRuleItem :is="currentView" @closeBox="closeBox"></addRuleItem>
 </div>
 
 </template>
@@ -52,25 +56,117 @@ var data = {
 }
 
 export default {
-    components: {
-        addRuleItem
-    },
     name: 'RuleTree',
     components: {
-        item
+        item,
+        addRuleItem
     },
     data () {
         return {
             trees: [data, {name: 'new tree', children: []}],
-          new: false
+            new: false,
+            addRuleItem: '<addRuleItem @closeBox="closeBox">',
+            currentView: '',
+            screenWidth: document.body.clientWidth,
+            screenHeight: document.body.clientHeight
       }
   },
 
   methods: {
     addTree: function () {
         this.trees.push({name: 'new tree', children: []})
+    },
+    popBox: function () {
+        // //获取页面的高度和宽度
+        var sWidth= this.screenWidth;
+        var sHeight=this.screenHeight;
+        
+        // //获取页面的可视区域高度和宽度
+        // var wHeight=document.documentElement.clientHeight;
+        
+        // var oMask=document.getElementById('mask');
+        var oMask=document.createElement("div");
+        oMask.id="mask";
+        oMask.style.height=sHeight+"px";
+        oMask.style.width=sWidth+"px";
+        document.body.appendChild(oMask);
+
+
+        // this.pop = true,
+        // this.$emit('update:pop', true),
+
+        this.currentView = 'addRuleItem'
+
+
+
+        // var popBox=document.getElementById('#pop-box');
+        // popBox.id="popBox";
+
+        // popBox.innerHTML= html;
+        // document.body.appendChild(popBox);
+        // var addRuleItem = new addRuleItem({  
+        // el:"#point"
+        // })  
+        // new addRuleItem().$mount('#pop-box')
+        // alert(popBox)
+
+        
+        //获取登陆框的宽和高
+        // var dHeight=popBox.offsetHeight;
+        // var dWidth=popBox.offsetWidth;
+        //     //设置登陆框的left和top
+        //     popBox.style.left=sWidth/2-dWidth/2+"px";
+            // popBox.style.top=wHeight/2-dHeight/2+"px";
+        },
+        closeBox: function () {
+            this.currentView = ''
+            var oMask=document.getElementById('mask');
+            // document.body.removeChild(popBox);
+            document.body.removeChild(oMask);
+
+        },
+        watch: {
+            screenWidth (val) {
+                if (!this.timer) {
+                    this.screenWidth = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        // that.screenWidth = that.$store.state.canvasWidth
+                        console.log(that.screenWidth)
+                        that.init()
+                        that.timer = false
+                    }, 400)
+                }
+            },
+            screenHeight (val) {
+                if (!this.timer) {
+                    this.screenHeight = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        // that.screenWidth = that.$store.state.canvasWidth
+                        console.log(that.screenHeight)
+                        that.init()
+                        that.timer = false
+                    }, 400)
+                }
+            }
+        },
+        mounted () {
+        const that = this
+        window.onresize = () => {
+            return (() => {
+                window.screenWidth = document.body.clientWidth,
+                this.screenWidth = window.screenWidth,
+                window.screenHeight = document.body.clientHeight,
+                this.screenHeight = window.screenHeight
+            })()
+        }
     }
-}
+
+    }
+
 }
 </script>
 
@@ -86,6 +182,16 @@ body {
 .bold {
   font-weight: bold;
 }
+#mask{ 
+    background-color:rgba(0,0,0,0.75);
+    filter: alpha(opacity=50); 
+    position:absolute; 
+    left:0;
+    top:0;
+    z-index:1000;
+    height: 50px;
+    width: this.screenWidth;
+}
 
 ul {
   padding-left: 5em;
@@ -99,4 +205,5 @@ ul {
 提交规则：上传到后端
 添加，修改时的弹出界面：动态添加组件
 复选框的选择功能
+减号的问题
  -->

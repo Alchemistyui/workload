@@ -6,8 +6,8 @@ const packageConfig = require('../package.json')
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
+  ? config.build.assetsSubDirectory
+  : config.dev.assetsSubDirectory
 
   return path.posix.join(assetsSubDirectory, _path)
 }
@@ -21,6 +21,12 @@ exports.cssLoaders = function (options) {
       sourceMap: options.sourceMap
     }
   }
+  const px2remLoader = {
+    loader: 'px2rem-loader',
+    options: {
+      remUnit: 75
+    }
+  }
 
   const postcssLoader = {
     loader: 'postcss-loader',
@@ -31,7 +37,7 @@ exports.cssLoaders = function (options) {
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+    const loaders = options.usePostCSS ? [cssLoader, postcssLoader, px2remLoader] : [cssLoader, px2remLoader]
 
     if (loader) {
       loaders.push({
@@ -88,7 +94,7 @@ exports.createNotifierCallback = () => {
   return (severity, errors) => {
     if (severity !== 'error') return
 
-    const error = errors[0]
+      const error = errors[0]
     const filename = error.file && error.file.split('!').pop()
 
     notifier.notify({

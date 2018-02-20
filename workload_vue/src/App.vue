@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <MainFrame/> -->
     <RuleTree/>
-    <addRuleItem/>
+
 
 
   </div>
@@ -11,14 +11,12 @@
 <script>
 import MainFrame from './components/MainFrame'
 import RuleTree from './components/RuleTree'
-import addRuleItem from './components/addRuleItem'
 
 export default {
   name: 'App',
   components: {
     MainFrame,
-    RuleTree,
-    addRuleItem
+    RuleTree
   }
 }
 </script>
