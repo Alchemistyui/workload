@@ -3,7 +3,7 @@
     <!-- <MainFrame/> -->
     <RuleTree/>
     <Footer/>
-    <CountRuleLog/>
+    <!-- <CountRuleLog/> -->
 
 
 

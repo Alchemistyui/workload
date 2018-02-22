@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import 'lib-flexible'
+<<<<<<< HEAD
 import VueRouter from 'vue-router'; // 引入vue路由组件  
 import VueSource from 'vue-resource'; // 引入组件，vue-source 有类似ajax的数据交互功能  
 import goods from './components/home/home.vue'; // 引用组件，为了在配置路由时使用  
@@ -11,8 +12,37 @@ import seller from './components/about/about.vue';
 
 Vue.use(VueRouter); // 使用引入的路由组件 
 
+=======
+import Vue_Router from 'vue-router'
+import Vue_Resource from 'vue-resource'
+import routerMap from './routers.js'
+
+Vue.use(Vue_Router)
+Vue.use(Vue_Resource)
+>>>>>>> origin/master
 
 Vue.config.productionTip = false
+
+// 请求编码转换
+Vue.http.options.emulateJSON = true
+
+var router = new Vue_Router({
+    hashbang: true,
+    history: false,
+    saveScrollPosition: false,
+    transitionOnLoad: true,
+    linkActiveClass: 'active'
+})
+
+// 全局的前置钩子函数，在路由切换开始时调用
+router.beforeEach(function(){
+    window.scrollTo(0,0)
+})
+
+// 独立出来的路由
+routerMap(router)
+
+router.start(App, '#app')
 
 /* eslint-disable no-new */
 new Vue({
