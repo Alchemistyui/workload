@@ -8,7 +8,7 @@
 
         <div>
             <p><label for="name">规则名称* </label><input id="name" v-model="name"></p>
-            <p><label for="intro">规则简介* </label><input id="intro" v-model="name"></p>
+            <p><label for="intro">规则简介* </label><input id="intro" v-model="intro"></p>
             <p>规则类别* 
             <select v-model="selected">
                 <option>无特殊类别</option>
@@ -21,7 +21,7 @@
 
         <div>
             <button @click="closeBox">取消</button>
-            <button>保存</button>
+            <button @click="saveItem">保存</button>
         </div> 
     </div>
     </div>
@@ -59,6 +59,11 @@ export default {
     methods: {
         closeBox: function () {
             this.$emit('closeBox')
+        },
+        saveItem: function () {
+            var data = {name: this.name, intro: this.intro, selected: this.selected, fatherRule: this.fatherRule};
+            // alert(data.name),
+            this.$emit('saveItem', data)
         }
         
     // },

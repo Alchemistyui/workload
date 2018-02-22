@@ -8,7 +8,8 @@
             class="item"
             :model="tree"
             @closeBox="closeBox"
-            @popBox="popBox">
+            @popBox="popBox"
+            @saveItem="saveItem">
         </item> <!-- 将数据传递给子组件 -->
     </ul>
     <!-- <div id="popBox" :is="currentView"></div> -->
@@ -55,6 +56,7 @@ var data = {
   ],
 }
 
+
 export default {
     name: 'RuleTree',
     components: {
@@ -68,7 +70,8 @@ export default {
             addRuleItem: '<addRuleItem @closeBox="closeBox">',
             currentView: '',
             screenWidth: document.body.clientWidth,
-            screenHeight: document.body.clientHeight
+            screenHeight: document.body.clientHeight,
+            logItems: []
       }
   },
 
@@ -78,8 +81,8 @@ export default {
     },
     popBox: function () {
         // //获取页面的高度和宽度
-        var sWidth= this.screenWidth;
-        var sHeight=this.screenHeight;
+        var sWidth= document.body.scrollWidth;
+        var sHeight=document.body.scrollHeight;
         
         // //获取页面的可视区域高度和宽度
         // var wHeight=document.documentElement.clientHeight;
@@ -125,45 +128,52 @@ export default {
             document.body.removeChild(oMask);
 
         },
-        watch: {
-            screenWidth (val) {
-                if (!this.timer) {
-                    this.screenWidth = val
-                    this.timer = true
-                    let that = this
-                    setTimeout(function () {
-                        // that.screenWidth = that.$store.state.canvasWidth
-                        console.log(that.screenWidth)
-                        that.init()
-                        that.timer = false
-                    }, 400)
-                }
-            },
-            screenHeight (val) {
-                if (!this.timer) {
-                    this.screenHeight = val
-                    this.timer = true
-                    let that = this
-                    setTimeout(function () {
-                        // that.screenWidth = that.$store.state.canvasWidth
-                        console.log(that.screenHeight)
-                        that.init()
-                        that.timer = false
-                    }, 400)
-                }
-            }
-        },
-        mounted () {
-        const that = this
-        window.onresize = () => {
-            return (() => {
-                window.screenWidth = document.body.clientWidth,
-                this.screenWidth = window.screenWidth,
-                window.screenHeight = document.body.clientHeight,
-                this.screenHeight = window.screenHeight
-            })()
+        saveItem: function (data) {
+            alert('emm'),
+            alert(data),
+            this.event.child.push(data)
+
+
         }
-    }
+    //     watch: {
+    //         screenWidth (val) {
+    //             if (!this.timer) {
+    //                 this.screenWidth = val
+    //                 this.timer = true
+    //                 let that = this
+    //                 setTimeout(function () {
+    //                     // that.screenWidth = that.$store.state.canvasWidth
+    //                     console.log(that.screenWidth)
+    //                     that.init()
+    //                     that.timer = false
+    //                 }, 400)
+    //             }
+    //         },
+    //         screenHeight (val) {
+    //             if (!this.timer) {
+    //                 this.screenHeight = val
+    //                 this.timer = true
+    //                 let that = this
+    //                 setTimeout(function () {
+    //                     // that.screenWidth = that.$store.state.canvasWidth
+    //                     console.log(that.screenHeight)
+    //                     that.init()
+    //                     that.timer = false
+    //                 }, 400)
+    //             }
+    //         }
+    //     },
+    //     mounted () {
+    //     const that = this
+    //     window.onresize = () => {
+    //         return (() => {
+    //             window.screenWidth = document.body.clientWidth,
+    //             this.screenWidth = window.screenWidth,
+    //             window.screenHeight = document.body.clientHeight,
+    //             this.screenHeight = window.screenHeight
+    //         })()
+    //     }
+    // }
 
     }
 
@@ -206,4 +216,5 @@ ul {
 添加，修改时的弹出界面：动态添加组件
 复选框的选择功能
 减号的问题
+树形第二层结点：不能传递popbox事件
  -->

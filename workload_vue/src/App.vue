@@ -2,6 +2,8 @@
   <div id="app">
     <!-- <MainFrame/> -->
     <RuleTree/>
+    <Footer/>
+    <CountRuleLog/>
 
 
 
@@ -11,12 +13,16 @@
 <script>
 import MainFrame from './components/MainFrame'
 import RuleTree from './components/RuleTree'
+import Footer from './components/Footer'
+import CountRuleLog from './components/CountRuleLog'
 
 export default {
   name: 'App',
   components: {
     MainFrame,
-    RuleTree
+    RuleTree,
+    Footer,
+    CountRuleLog
   }
 }
 </script>

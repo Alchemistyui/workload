@@ -23,7 +23,8 @@
               class="item"
               v-for="(model, index) in model.children"
               :key="index"
-              :model="model">
+              :model="model"
+              @popBox="popBox">
           </item>
       </ul>
   </li>    
@@ -257,7 +258,7 @@ export default {
         //     this.currentView = 'blank',
         //     // document.body.removeChild(popBox);
         //     document.body.removeChild(oMask);
-        // }
+        // },
         popBox: function () {
             this.$emit('popBox')
         }
