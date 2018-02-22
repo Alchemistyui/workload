@@ -26,6 +26,7 @@
 <script>
 import item from './item'
 import addRuleItem from './addRuleItem'
+import ComputeRuleTitle from './ComputeRuleTitle'
 
 var data = {
     name: 'My Tree',
@@ -61,7 +62,8 @@ export default {
     name: 'RuleTree',
     components: {
         item,
-        addRuleItem
+        addRuleItem,
+        ComputeRuleTitle
     },
     data () {
         return {
