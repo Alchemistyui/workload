@@ -16,7 +16,31 @@
                 <option>申报审核类</option>
             </select>
             </p>
-            <p><label for="fatherRule">父级规则* </label><input id="name" v-model="fatherRule"></p>
+
+
+            <div v-if="selected=='无特殊类别'">
+            <p><label for="fatherRule">父级规则* </label><input id="fatherRule" v-model="fatherRule"></p>
+            </div>
+
+
+            <div v-else>
+                <p>申报形式* 
+                    <select v-model="form">
+                        <option>个人申报</option>
+                        <option>小组/个人申报</option>
+                    </select>
+                </p>
+                <p><span v-if="selected=='导入复核类'">审核人</span><span v-else>负责人</span></p>
+
+                <p><label for="fatherRule">父级规则* </label><input id="fatherRule" v-model="fatherRule"></p>
+                <p>复核截止时间*</p>
+                <p>导入截止时间*</p>
+                <p>公式参数* <button>+</button></p>
+                <p><label for="formula">计算公式* </label><input id="formula" v-model="formula"></p>
+                <p>项目属性 <button>+</button></p>
+                <p><label for="maxWorkload">最大工作当量* </label><input id="maxWorkload" v-model="maxWorkload"></p>
+            </div>
+
         </div>
 
         <div>
@@ -37,7 +61,10 @@ export default {
             name: '',
             intro: '',
             selected: '无特殊类别',
-            fatherRule: ''
+            fatherRule: '',
+            form: '',
+            formula: '',
+            maxWorkload: ''
             // screenWidth: document.body.clientWidth
         }
     },

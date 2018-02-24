@@ -8,13 +8,12 @@
             class="item"
             :model="tree"
             @closeBox="closeBox"
-            @popBox="popBox"
-            @saveItem="saveItem">
+            @popBox="popBox">
         </item> <!-- 将数据传递给子组件 -->
     </ul>
     <!-- <div id="popBox" :is="currentView"></div> -->
     <div id="mmmask"></div>
-    <addRuleItem :is="currentView" @closeBox="closeBox"></addRuleItem>
+    <addRuleItem :is="currentView" @closeBox="closeBox" @saveItem="saveItem"></addRuleItem>
 </div>
 
 </template>
@@ -26,33 +25,33 @@
 <script>
 import item from './item'
 import addRuleItem from './addRuleItem'
+import ComputeRuleTitle from './ComputeRuleTitle'
 
 var data = {
-    name: 'My Tree',
+    name: '一、培养方案相关人才培养当量', intro: '培养方案相关人才培养工作是指教师从事与学院人才培养方案相关的课程教学、实践教学等（由多位老师共同参与完成的项目，工作当量由该项工作负责人根据教师参与情况分配。）', selected: '无特殊类别', fatherRule: '', newItem: false,
     children: [
-    { name: 'hello' },
-    { name: 'wat' },
     {
-      name: 'child folder',
+      name: '1、本科生和研究生（含留学生、非全日制研究生）培养方案', intro: '本科生和研究生（含留学生、非全日制研究生）培养方案', selected: '无特殊类别', fatherRule: '一、培养方案相关人才培养当量', newItem: false,
       children: [
       {
-          name: 'child folder',
-          children: [
-          { name: 'hello' },
-          { name: 'wat' }
-          ]
-      },
-      { name: 'hello' },
-      { name: 'wat' },
-      {
-          name: 'child folder',
-          children: [
-          { name: 'hello' },
-          { name: 'wat' }
-          ]
+          name: 'new stuff', intro: 'newItem', selected: '无特殊类别', fatherRule: '1、本科生和研究生（含留学生、非全日制研究生）培养方案', newItem: true,
+      //     children: [
+      //     { name: 'hello' },
+      //     { name: 'wat' }
+      //     ]
+      // },
+      // { name: 'hello' },
+      // { name: 'wat' },
+      // {
+      //     name: 'child folder',
+      //     children: [
+      //     { name: 'hello' },
+      //     { name: 'wat' }
+      //     ]
       }
       ]
-  }
+  },
+  // {name:, intro: , selected: , fatherRule: },
   ],
 }
 
@@ -61,7 +60,8 @@ export default {
     name: 'RuleTree',
     components: {
         item,
-        addRuleItem
+        addRuleItem,
+        ComputeRuleTitle
     },
     data () {
         return {
@@ -129,8 +129,8 @@ export default {
 
         },
         saveItem: function (data) {
-            alert('emm'),
-            alert(data),
+            alert(this.event),
+            // 如何获取触发事件的对象
             this.event.child.push(data)
 
 
@@ -211,10 +211,10 @@ ul {
 </style>
 
 <!-- 
+    不同类别计算规则和公式的处理
+    保存按钮无法判断是谁发起的
+    复选框的选择功能
 操作日志：点击提交时组件间传值修改表格内容并提交到文件
 提交规则：上传到后端
-添加，修改时的弹出界面：动态添加组件
-复选框的选择功能
-减号的问题
-树形第二层结点：不能传递popbox事件
+
  -->

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <li style="width: 250px">
+            <li>
                 <div  @mouseenter="enterLeave" @mouseleave="enterLeave">
                     <input type="checkbox" :value="this.model.name"  v-model="isFolder?checked : allChecked"> 
                     <span
@@ -13,8 +13,7 @@
 
                 <span class="add" v-if="showAdd" @click="popBox" id="btnLogin">+</span>
                 <span class="add" v-if="showAdd" @click="popBox" id="btnLogin">修改</span>
-                <!-- 减号数量到了后消失未解决 -->
-                <span v-if="this.model.new"  @click="deletItem">-</span>
+                <span v-if="this.model.newItem && showAdd"  @click="deletItem">-</span>
             </div>
 
 
