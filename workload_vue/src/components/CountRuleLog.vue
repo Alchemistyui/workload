@@ -12,10 +12,14 @@
             <td>{{item.person}}</td>
             <td>{{item.content}}</td>
         </tr>
+<<<<<<< HEAD
         <!-- <tfoot>
 =======
         <tfoot>
 >>>>>>> origin/master
+=======
+        <tfoot>
+>>>>>>> abe53c5501b077d0e6b75822b4f57a8f29ad11e6
             <tr>
                 <td colspan="4">
                     <div class="pull-left">
@@ -27,7 +31,11 @@
                 </td>
             </tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
         </tfoot> -->
+=======
+        </tfoot>
+>>>>>>> abe53c5501b077d0e6b75822b4f57a8f29ad11e6
     </table>
 </template>
 
@@ -35,6 +43,7 @@
 <!-- row的值存在父组件里，用prop传值，动态传值，但是要考虑如何在组件中动态创建结点（直接v-for） -->
 
 <script>
+<<<<<<< HEAD
 // import bootPage from './BootPage.vue'
 
     export default {
@@ -42,6 +51,14 @@
         //         bootPage
         //     },
 
+=======
+import bootPage from './BootPage.vue'
+
+    export default {
+        components: {
+                bootPage
+            },
+>>>>>>> abe53c5501b077d0e6b75822b4f57a8f29ad11e6
         // props: { //传递父组件传递的数据
         //     items: Object //判断是否是Object类型的数据
         // },
