@@ -63,11 +63,11 @@ export default {
         {text: '已拒绝'}
         ],
         lists: [
-        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '李美蓉', projectState: '待审核/待复核'},
-        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '张翔', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '李美蓉', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '张翔', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '张翔', projectState: '待审核/待复核'}
+        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1李美蓉', projectState: '待审核/待复核'},
+        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1张翔', projectState: '待审核/待复核'},
+        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2李美蓉', projectState: '待审核/待复核'},
+        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2张翔', projectState: '待审核/待复核'},
+        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '3张翔', projectState: '待审核/待复核'}
 
         ]
     }
@@ -80,9 +80,9 @@ computed: {
         var searchTeacher = this.searchTeacher;
         var teachers = this.teachers;
         return teachers.filter(function (item) {
-            item.indexOf(searchTeacher) != -1,
-            alert(item.indexOf(searchTeacher))
+            return item.indexOf(searchTeacher) !== -1
          })
+
 
             // var self = this
             // self.teachers.filter(function (teacher) {
@@ -139,6 +139,7 @@ computed: {
             showTeacher() {
                 var hash = {};
                 // alert(this.lists[0].teacher)
+                           // alert(this.filterTeachers)
                 for (var i = 0, elem; (elem = this.lists[i].teacher) != null; i++) {
                     // alert(elem + i)
                     if (!hash[elem]) {
