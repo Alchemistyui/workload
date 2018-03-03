@@ -1,6 +1,6 @@
 <template>
     <div>
-        <select v-model="searchType" id="state">
+        <select v-model="searchState" id="state">
             <option disabled value="">项目状态</option>
             <option v-for="state in states">{{state.text}}</option>
         </select>
@@ -26,7 +26,7 @@
 
 
  <p>每页
-    <select v-model="limit" id="state">
+    <select v-model="limit" @change="changeLimit" id="state">
         <option>1</option>
         <option>3</option>
         <option>5</option>
@@ -63,7 +63,7 @@
     </tr>
 </table>
 
-<p>共{{lists.length}}条当前工作目录</p>
+<p>共{{filteredArray.length}}条当前工作目录</p>
 
 <p class="pagination">
     <a class="button" @click="changePage(-1)">上一页</a>
@@ -80,14 +80,20 @@
 export default {
   data () {
     return {
-        searchType: '',
+        searchState: '',
         searchTeacher: '',
         searchRule: '',
         showTeTable: false,
         showRuTable: false,
+        filteredArray: [
+            {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1李美蓉', projectState: '待审核/待复核'},
+            {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1张翔', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2李美蓉', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2张翔', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '3张翔', projectState: '待审核/待复核'}
+        ],
         teachers: [],
         rules: [],
-        filteredArray: [],
         total: 0,
         limit: 3,
         page: 1,
@@ -99,17 +105,17 @@ export default {
         {text: '已拒绝'}
         ],
         lists: [
-        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1李美蓉', projectState: '待审核/待复核'},
-        {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1张翔', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2李美蓉', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2张翔', projectState: '待审核/待复核'},
-        {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '3张翔', projectState: '待审核/待复核'}
-
+            {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1李美蓉', projectState: '待审核/待复核'},
+            {ruleName: '1.1', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '1张翔', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2李美蓉', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '2张翔', projectState: '待审核/待复核'},
+            {ruleName: '1.2', type:'导入复核类', projectName: 'werfas', form: '个人申报', workload: 2, teacher: '3张翔', projectState: '待审核/待复核'}
         ]
     }
 },
 computed: {
     reverseItems: function () {
+        // this.paginate = 
         return this.lists.reverse()
     },
     filterTeachers: function () {
@@ -133,27 +139,33 @@ computed: {
                 return item.indexOf(searchRule) !== -1
             })
         },
-        paginate () {
-            var arr = [];
-            // console.log('paginate')
-            // var searchRule = this.searchRule;
-            // var searchTeacher = this.searchTeacher;
-            // var searchType = this.searchType;
-            // var reverseItems = this.reverseItems;
-            // arr = reverseItems.filter(function (item) {
-            //     return item.indexOf(searchTeacher) !== -1 && item.indexOf(searchRule) !== -1 && item.indexOf(searchType) !== -1
-            // },
-            this.total = Math.ceil(this.reverseItems.length / this.limit)
-            let page = parseInt(this.page - 1)
-            if (page < 0) {
-                page = 0
-            }
+        paginate : {
+            get: function () {
+                var arr = [];
+                // console.log('paginate')
+                // var searchRule = this.searchRule;
+                // var searchTeacher = this.searchTeacher;
+                // var searchType = this.searchType;
+                // var reverseItems = this.reverseItems;
+                // arr = reverseItems.filter(function (item) {
+                //     return item.indexOf(searchTeacher) !== -1 && item.indexOf(searchRule) !== -1 && item.indexOf(searchType) !== -1
+                // },
+                this.total = Math.ceil(this.filteredArray.length / this.limit)
+                let page = parseInt(this.page - 1)
+                if (page < 0) {
+                    page = 0
+                }
 
-            
-            // alert(arr.push)
-            arr = this.reverseItems.slice(this.limit * page, this.limit * (page + 1))
-            return arr   
-        }        
+                
+                // alert(arr.push)
+                arr = this.filteredArray.slice(this.limit * page, this.limit * (page + 1))
+                return arr   
+                }
+            // set: function (newValue) {
+            //     return this.lists.reverse()
+            // }
+        }
+        }, 
 
             // teacher: function () {
 
@@ -173,7 +185,6 @@ computed: {
             // //     }
             // //     return arr
             // }
-        },
         methods: {
             // 搜索
             // search(e) {
@@ -241,27 +252,37 @@ computed: {
                   this.page++
               } else {
                   window.alert('已是最后一页')
+                }
+              } else {
+                    if (this.page > 1) {
+                      this.page--
+                  } else {
+                      window.alert('已是第一页')
+                  }
               }
-          } else {
-            if (this.page > 1) {
-              this.page--
-          } else {
-              window.alert('已是第一页')
-          }
-      }
-  },
-  // 取不到过滤后的数组啊我的天
-  search() {
-    var arr = [];
-    var searchRule = this.searchRule;
-    var searchTeacher = this.searchTeacher;
-    var searchType = this.searchType;
-    var reverseItems = this.reverseItems;
-    arr = reverseItems.filter(function (item) {
-        return item.teacher.indexOf(searchTeacher) !== -1 && item.ruleName.indexOf(searchRule) !== -1 && item.type.indexOf(searchType) !== -1
-    })
-    alert(arr)
-}
+              // alert(this.page)
+            },
+            search() {
+                var arr = ['1'];
+                var searchRule = this.searchRule;
+                var searchTeacher = this.searchTeacher;
+                var searchState = this.searchState;
+                var reverseItems = this.reverseItems;
+                // alert(searchType);
+                // alert(reverseItems[0].type);
+                // alert(reverseItems[0].teacher);
+                arr = reverseItems.filter(function (item) {
+                    return item.teacher.indexOf(searchTeacher) !== -1 && item.ruleName.indexOf(searchRule) !== -1 && item.projectState.indexOf(searchState) !== -1
+                }),
+                this.filteredArray = arr
+                // alert(this.filteredArray)
+            },
+            changeLimit() {
+                // alert('emm'),
+                this.page = 1
+            }
+
+
 }
 }
 
