@@ -59,7 +59,7 @@
         <td>{{item.workload}}</td>
         <td>{{item.teacher}}</td>
         <td>{{item.projectState}}</td>
-        <td><button>退回导入</button><button>退回复核</button><button>查看详情</button></td>
+        <td><button @click = "backToInput($event)">退回导入</button><button>退回复核</button><button>查看详情</button></td>
     </tr>
 </table>
 
@@ -280,6 +280,11 @@ computed: {
             changeLimit() {
                 // alert('emm'),
                 this.page = 1
+            },
+            backToInput(e) {
+                alert(e.target.parentNode.parentNode.childNodes[6].innerHTML),
+                alert(e.target.parentNode.parentNode.childNodes[12].innerHTML)
+
             }
 
 
