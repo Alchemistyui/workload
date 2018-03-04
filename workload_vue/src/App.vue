@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <!-- <MainFrame/> -->
+    <MainFrame/>
     <!-- <RuleTree/> -->
     <!-- <Footer/> -->
     <!-- <CountRuleLog/> -->
-    <TeacherProject/>
+    <!-- <TeacherProject/> -->
     <!-- <Footer/> -->
     <!-- <CountRuleLog/> -->
 

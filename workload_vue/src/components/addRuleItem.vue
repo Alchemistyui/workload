@@ -108,7 +108,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style>
 #box{ 
     position:fixed;
     z-index:1001;
